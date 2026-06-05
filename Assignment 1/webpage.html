@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Incredible State — Royal Rajasthan Portal</title>
+    <!-- Executive Top-Tier Typography Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #060814;
+            --panel-bg: rgba(17, 24, 39, 0.7);
+            --accent-gold: #f59e0b;
+            --accent-glow: rgba(245, 158, 11, 0.15);
+            --text-heading: #ffffff;
+            --text-body: #94a3b8;
+            --border-line: rgba(255, 255, 255, 0.06);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top, #1e1540 0%, var(--bg-base) 100%);
+            color: var(--text-heading);
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* 1. HEADER LOGO & LINKS (Left Brand, Right Links) */
+        header {
+            background-color: rgba(9, 11, 22, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-line);
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+
+        .logo span {
+            color: var(--accent-gold);
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.75rem;
+        }
+
+        .social-links a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* 2. MENUBAR LAYOUT SECTION */
+        nav {
+            background-color: rgba(15, 23, 42, 0.4);
+            border-bottom: 1px solid var(--border-line);
+            padding: 0.85rem 3rem;
+        }
+
+        .menu-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .menu-list a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .menu-list a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* SINGLE BLOCK FULL CENTER CONTAINER */
+        .main-layout {
+            max-width: 1300px;
+            width: 100%;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            box-sizing: border-box;
+        }
+
+        .section-block {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-line);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+        }
+
+        .content-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #ffffff 40%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .block-text {
+            color: var(--text-body);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* MANDATED THREE PHOTO BOX GRID (BEECH MEIN EXACT 3 BOXES) */
+        .photo-grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-box {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-line);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-6px);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .box-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-line);
+        }
+
+        .box-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            flex: 1;
+        }
+
+        .box-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .box-desc {
+            font-size: 0.92rem;
+            color: var(--text-body);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* SPECIFIC MULTI-COLUMN REGIONAL SERVICES GRID */
+        .services-subgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .service-card {
+            background-color: rgba(6, 9, 20, 0.6);
+            border: 1px solid var(--border-line);
+            border-radius: 14px;
+            padding: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--accent-gold);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.15rem;
+        }
+
+        /* CONTACT GRID HUB INFRASTRUCTURE */
+        .contact-layout-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .contact-info-block {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .info-row {
+            font-size: 1rem;
+            color: var(--text-body);
+        }
+
+        .info-row strong {
+            color: #ffffff;
+        }
+
+        /* 3. HERITAGE DATA LAYER SECTION (SHIFTED SECURELY TO THE BOTTOM) */
+        .bottom-heritage-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .heritage-pill-box {
+            padding: 1.1rem;
+            background-color: rgba(6, 9, 20, 0.8);
+            border: 1px dashed rgba(245, 158, 11, 0.2);
+            border-radius: 14px;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* 5. SAMPLE FOOTER COMPONENT */
+        footer {
+            background-color: #04060d;
+            border-top: 1px solid var(--border-line);
+            padding: 1.5rem;
+            text-align: center;
+            color: #475569;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER COMPONENT BLOCK -->
+    <header>
+        <div class="logo">Incredible<span>State</span></div>
+        <div class="social-links">
+            <a href="#">Instagram</a>
+            <a href="#">YouTube</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </header>
+
+    <!-- 2. NAVBAR NAVIGATION FRAMEWORK -->
+    <nav>
+        <ul class="menu-list">
+            <li><a href="#about">About</a></li>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- CENTRAL LAYOUT PIPELINE -->
+    <div class="main-layout">
+        
+        <!-- ABOUT MODULE PANELS -->
+        <div id="about" class="section-block">
+            <h2 class="content-heading">About The Kingdom</h2>
+            <p class="block-text">
+                Welcome to Rajasthan, the land of imperial forts, glowing desert ridges, and royal heritage legacy. The Incredible State portal is designed to provide high-fidelity exploration insights, managing smooth transit, customized palace logistics, and verified analytical tour frameworks across the historic cities of India.
+            </p>
+        </div>
+
+        <!-- MAIN MANDATED CONTENT VIEWPORT AREA (3 PHOTO BOXES IN THE MIDDLE) -->
+        <div id="destinations">
+            <h2 class="content-heading" style="text-align: center; margin-bottom: 2rem;">Curated Royal Expeditions</h2>
+            <div class="photo-grid-container">
+                
+                <!-- Box 1 — Local Jodhpur Link -->
+                <div class="feature-box">
+                    <img src="jodhpur.jpg" alt="Mehrangarh Fort Jodhpur" class="box-image">
+                    <div class="box-body">
+                        <h3 class="box-title">Mehrangarh, Jodhpur</h3>
+                        <p class="box-desc">Explore the massive architectural fortress crowning the Blue City with premium verified guide logistics and strategic heritage analysis narration.</p>
+                    </div>
+                </div>
+
+                <!-- Box 2 — Local Jaipur Link -->
+                <div class="feature-box">
+                    <img src="jaipur.jpg" alt="Hawa Mahal Jaipur" class="box-image">
+                    <div class="box-body">
+                        <h3 class="box-title">Hawa Mahal, Jaipur</h3>
+                        <p class="box-desc">Observe the spectacular honeycomb facade architecture of pink sandstone from priority luxury viewing points setup over the city grid.</p>
+                    </div>
+                </div>
+
+                <!-- Box 3 — Map to local udaipur.jpg -->
+                <div class="feature-box">
+                    <img src="udaipur.jpg" alt="Lake Pichola Udaipur" class="box-image">
+                    <div class="box-body">
+                        <h3 class="box-title">Lake Pichola, Udaipur</h3>
+                        <p class="box-desc">Sail through serene sunset cruise channels surrounding exquisite white marble palaces nestled along the historic Aravalli range contours.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SERVICES SPECIFIC COMPONENT GRID -->
+        <div id="services" class="section-block">
+            <h2 class="content-heading">Premium Services</h2>
+            <div class="services-subgrid">
+                <div class="service-card">
+                    <h3>👑 Elite Palace Stays</h3>
+                    <p class="block-text" style="font-size: 0.9rem;">Verified priority reservation access into heritage resorts and iconic luxury lake side camps.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🐫 Thar Desert Trails</h3>
+                    <p class="block-text" style="font-size: 0.9rem;">Custom mapped desert safaris across custom paths featuring premium cultural logistics setup.</p>
+                </div>
+                <div class="service-card">
+                    <h3>📜 Certified Historians</h3>
+                    <p class="block-text" style="font-size: 0.9rem;">Direct accompaniment by highly trained bilingual legal site experts detailing monument logs.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. HERITAGE DATA SECTION (SHIFTED TO THE BOTTOM COMPACT GRID) -->
+        <div class="section-block">
+            <h2 class="content-heading" style="font-size: 1.5rem; margin-bottom: 1.25rem;">Live Heritage Registry Matrix</h2>
+            <div class="bottom-heritage-grid">
+                <div class="heritage-pill-box">🏛️ 24/7 Royal Site Guides</div>
+                <div class="heritage-pill-box">🐫 Luxury Desert Camps</div>
+                <div class="heritage-pill-box">🎟️ Instant Monument Passes</div>
+                <div class="heritage-pill-box">🗺️ Strategic Route Planners</div>
+            </div>
+        </div>
+
+        <!-- CONTACT INTERACTIVE HUB GRID -->
+        <div id="contact" class="section-block">
+            <h2 class="content-heading">Contact Workspace</h2>
+            <div class="contact-layout-split">
+                <div class="contact-info-block">
+                    <div class="info-row"><strong>Regional Command:</strong> High-End Support Hub, Jodhpur, RJ, India</div>
+                    <div class="info-row"><strong>Support Email:</strong> concierge@incrediblestate.in</div>
+                    <div class="info-row"><strong>Operational Hours:</strong> 24/7 Digital Concierge Routing Active</div>
+                </div>
+                <div class="contact-info-block" style="background-color: #09090b; border-radius: 12px; padding: 1.25rem; border: 1px solid var(--border-line);">
+                    <p class="block-text" style="font-size: 0.95rem; color: #ffffff; font-weight: 600;">Secure Portal Gateway</p>
+                    <p class="block-text" style="font-size: 0.85rem; margin-top: 0.25rem;">Your connection token to Rajasthan's administrative travel matrix is active and encrypted.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 5. FOOTER COMPONENT -->
+    <footer>
+        &copy; 2026 Incredible State Ecosystem • Compiled strictly matching assignment submission design layouts.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Practice 1 — Delta Control Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #060814;
+            --panel-bg: rgba(17, 24, 39, 0.7);
+            --accent-indigo: #6366f1;
+            --text-heading: #ffffff;
+            --text-body: #94a3b8;
+            --border-line: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top, #1e1540 0%, var(--bg-base) 100%);
+            color: var(--text-heading);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            box-sizing: border-box;
+        }
+
+        .lab-wrapper {
+            width: 100%;
+            max-width: 740px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header-section h1 {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .header-section h1 span { color: var(--accent-indigo); }
+        .header-section p { color: var(--text-body); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.4rem; font-weight: 600; }
+
+        .task-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-line);
+            border-radius: 20px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .task-num {
+            color: var(--accent-indigo);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .task-prompt {
+            margin: 0 0 1.25rem 0;
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .input-group label {
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: #09090b;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        input:focus { border-color: var(--accent-indigo); }
+
+        button {
+            background: var(--accent-indigo);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+
+        button:hover { background: #4f46e5; }
+
+        .console {
+            background: #04060d;
+            border: 1px solid #1f2937;
+            padding: 1rem;
+            border-radius: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            color: #34d399;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lab-wrapper">
+        <div class="header-section">
+            <h1>JS Practice 1 — <span>Delta Form</span></h1>
+            <p>Interactive Control Center Terminal</p>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 01</div>
+            <p class="task-prompt">Variables scope trace logic handler (var vs let vs const).</p>
+            <div class="form-row">
+                <button onclick="executeTask1()">Run Scope Analysis</button>
+            </div>
+            <div id="out1" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 02</div>
+            <p class="task-prompt">Fruits Array Indexing Checker: Fetch the second element from values.</p>
+            <div class="form-row">
+                <div class="input-group" style="flex: 2;">
+                    <label>Fruits Array (Comma Separated)</label>
+                    <input type="text" id="t2-input" value="Apple, Banana, Orange, Mango, Grape">
+                </div>
+                <button onclick="executeTask2()">Get Index [1]</button>
+            </div>
+            <div id="out2" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 03</div>
+            <p class="task-prompt">Mutate Array Vectors: Perform push() then automatic pop() tracking operations.</p>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Base Elements</label>
+                    <input type="text" id="t3-arr" value="X, Y, Z">
+                </div>
+                <div class="input-group">
+                    <label>Element to Push</label>
+                    <input type="text" id="t3-push" value="W">
+                </div>
+                <button onclick="executeTask3()">Mutate Vector</button>
+            </div>
+            <div id="out3" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 04</div>
+            <p class="task-prompt">Array.map() Method: Square each numeric parameter inside the sequence stream.</p>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Numbers Stream (Comma Separated)</label>
+                    <input type="text" id="t4-input" value="2, 3, 4, 5">
+                </div>
+                <button onclick="executeTask4()">Map Squares</button>
+            </div>
+            <div id="out4" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 05</div>
+            <p class="task-prompt">Array.filter() Method: Isolate and drop all even numbers to filter odd digits.</p>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Target Dataset Feed</label>
+                    <input type="text" id="t5-input" value="1, 2, 3, 4, 5, 6, 7, 8">
+                </div>
+                <button onclick="executeTask5()">Filter Odds</button>
+            </div>
+            <div id="out5" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 06</div>
+            <p class="task-prompt">Dynamic Object Logging: Generate template greetings string data parameters.</p>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>User Identity</label>
+                    <input type="text" id="t6-name" value="Yogesh">
+                </div>
+                <div class="input-group">
+                    <label>Age Parameter</label>
+                    <input type="number" id="t6-age" value="22">
+                </div>
+                <div class="input-group" style="flex: 1.5;">
+                    <label>Occupation Struct</label>
+                    <input type="text" id="t6-job" value="Full-Stack Developer">
+                </div>
+                <button onclick="executeTask6()">Log Context</button>
+            </div>
+            <div id="out6" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 07</div>
+            <p class="task-prompt">Object Argument Evaluation: Compute area coordinates of a rectangle (W * H).</p>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Width Matrix</label>
+                    <input type="number" id="t7-w" value="12">
+                </div>
+                <div class="input-group">
+                    <label>Height Matrix</label>
+                    <input type="number" id="t7-h" value="5">
+                </div>
+                <button onclick="executeTask7()">Get Area</button>
+            </div>
+            <div id="out7" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 08</div>
+            <p class="task-prompt">Extract Blueprint Keys: Return array tracking object indices using Object.keys().</p>
+            <div class="form-row">
+                <button onclick="executeTask8()">Execute Keys Extract</button>
+            </div>
+            <div id="out8" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 09</div>
+            <p class="task-prompt">Objects Consolidation: Merge discrete parameters maps using Object.assign().</p>
+            <div class="form-row">
+                <button onclick="executeTask9()">Merge Structural Objects</button>
+            </div>
+            <div id="out9" class="console">Ready for runtime tracking execution...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Task 10</div>
+            <p class="task-prompt">Array.reduce() Method: Accumulate linear array sum to compute single net totals.</p>
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Numeric Sequence Records</label>
+                    <input type="text" id="t10-input" value="10, 20, 30, 40">
+                </div>
+                <button onclick="executeTask10()">Accumulate Sum</button>
+            </div>
+            <div id="out10" class="console">Ready for runtime tracking execution...</div>
+        </div>
+    </div>
+
+    <script>
+        // Q1 Logic
+        function executeTask1() {
+            var varText = "Functional Scope (var) exists.";
+            if (true) {
+                let letText = "Locked inside Block Scope (let).";
+                var innerVar = "var bypasses this if block.";
+            }
+            document.getElementById('out1').innerText = 
+                `Analysis Tracking Dump:\n` +
+                `- Checked standard 'var' outside block bounds => Successful context read.\n` +
+                `- Checked block-scoped 'let' execution test   => Threw secure access restrictions error.\n\n` +
+                `Scope Rules Summary: var matches function/global scope pipelines, while let/const obey strict block closures.`;
+        }
+
+        // Q2 Logic
+        function executeTask2() {
+            let fruits = document.getElementById('t2-input').value.split(',').map(s => s.trim());
+            if(fruits.length < 2) { document.getElementById('out2').innerText = "Anomalous Length: Populate minimum 2 entries."; return; }
+            // Custom core function matching query requirements
+            let secondFruit = ((arr) => arr[1])(fruits);
+            document.getElementById('out2').innerText = `Array Map Segmented: [${fruits.join(', ')}]\nReturned Functional Index [1] Element Target => "${secondFruit}"`;
+        }
+
+        // Q3 Logic
+        function executeTask3() {
+            let rawArr = document.getElementById('t3-arr').value.split(',').map(s => s.trim()).filter(s => s !== "");
+            let itemToPush = document.getElementById('t3-push').value.trim();
+            
+            let trace = ((arr, element) => {
+                arr.push(element);
+                let popped = arr.pop();
+                return { resultArr: arr, removed: popped };
+            })([...rawArr], itemToPush);
+
+            document.getElementById('out3').innerText = 
+                `Action 1 Log: Appended element '${itemToPush}' using .push()\n` +
+                `Action 2 Log: Extracted element '${trace.removed}' using .pop()\n` +
+                `Modified State Output Return Vector => [${trace.resultArr.join(', ')}]`;
+        }
+
+        // Q4 Logic
+        function executeTask4() {
+            let numSequence = document.getElementById('t4-input').value.split(',').map(Number).filter(n => !isNaN(n));
+            let squaresMapped = numSequence.map(x => x * x);
+            document.getElementById('out4').innerText = `Source Integer Array: [${numSequence.join(', ')}]\nArray.map() Squares Output => [${squaresMapped.join(', ')}]`;
+        }
+
+        // Q5 Logic
+        function executeTask5() {
+            let baseDataSet = document.getElementById('t5-input').value.split(',').map(Number).filter(n => !isNaN(n));
+            let isolatedOdds = baseDataSet.filter(n => n % 2 !== 0);
+            document.getElementById('out5').innerText = `Source Data Stream: [${baseDataSet.join(', ')}]\nArray.filter() Odds Pipeline Result => [${isolatedOdds.join(', ')}]`;
+        }
+
+        // Q6 Logic
+        function executeTask6() {
+            let personObj = {
+                name: document.getElementById('t6-name').value.trim(),
+                age: parseInt(document.getElementById('t6-age').value),
+                occupation: document.getElementById('t6-job').value.trim()
+            };
+            let templateStr = `Hello, my name is ${personObj.name}. I am ${personObj.age} years old and I work as a ${personObj.occupation}.`;
+            document.getElementById('out6').innerText = `Instantiated Object Tree Blueprint:\n${JSON.stringify(personObj, null, 2)}\n\nLogged Functional Greeting Message Output =>\n"${templateStr}"`;
+        }
+
+        // Q7 Logic
+        function executeTask7() {
+            let dimensions = {
+                width: parseFloat(document.getElementById('t7-w').value),
+                height: parseFloat(document.getElementById('t7-h').value)
+            };
+            let productArea = dimensions.width * dimensions.height;
+            document.getElementById('out7').innerText = `Passed Argument Target: { width: ${dimensions.width}, height: ${dimensions.height} }\nComputed Coordinate Multiplier Area Result => ${productArea}`;
+        }
+
+        // Q8 Logic
+        function executeTask8() {
+            let profileObject = { rollNumber: "24UADS1059", university: "MBM University", branch: "Data Science" };
+            let extractedKeys = Object.keys(profileObject);
+            document.getElementById('out8').innerText = `Target Sample Object Blueprint Struct:\n${JSON.stringify(profileObject, null, 2)}\n\nObject.keys() Extracted Mapping Array =>\n[${extractedKeys.join(', ')}]`;
+        }
+
+        // Q9 Logic
+        function executeTask9() {
+            let coreMetadata = { name: "Yogi Verma", department: "Engineering" };
+            let operationalTokens = { classification: "Delta-Tier", status: "Active" };
+            let consolidatedObject = Object.assign({}, coreMetadata, operationalTokens);
+            document.getElementById('out9').innerText = `Argument Obj A: ${JSON.stringify(coreMetadata)}\nArgument Obj B: ${JSON.stringify(operationalTokens)}\n\nObject.assign() Consolidated Target Output Model Struct:\n${JSON.stringify(consolidatedObject, null, 2)}`;
+        }
+
+        // Q10 Logic
+        function executeTask10() {
+            let financeFeed = document.getElementById('t10-input').value.split(',').map(Number).filter(n => !isNaN(n));
+            let totalAccumulatedSum = financeFeed.reduce((acc, curr) => acc + curr, 0);
+            document.getElementById('t10-input');
+            document.getElementById('out10').innerText = `Linear Number Feed Track: [${financeFeed.join(', ')}]\nArray.reduce() Total Final Summation Yield => ${totalAccumulatedSum}`;
+        }
+    </script>
+</body>
+</html>

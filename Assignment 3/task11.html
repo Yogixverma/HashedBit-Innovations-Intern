@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Assignment 3 — Task 11</title>
+    <style>
+        body { background: radial-gradient(circle at top, #141b2d 0%, #090d16 100%); color: white; font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem; box-sizing: border-box; }
+        .card { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 20px; padding: 2.5rem; max-width: 620px; width: 100%; box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
+        h3 { color: #6366f1; margin: 0 0 1rem 0; }
+        textarea { width: 100%; height: 260px; background: #09090b; border: 1px solid #334155; color: #cbd5e1; border-radius: 10px; padding: 0.75rem; font-family: monospace; font-size: 0.85rem; outline: none; margin-bottom: 1rem; box-sizing: border-box; }
+        button { background: #4f46e5; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; }
+        .console { background: #04060d; border: 1px solid #1f2937; padding: 1rem; border-radius: 10px; margin-top: 1.5rem; font-family: monospace; color: #34d399; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>Question 11 — Advanced JSON Object Parser</h3>
+        <p style="color:#e2e8f0; margin-bottom:1.25rem;">Live Nested Object payload map bounds. Edit custom keys or inner subject integers directly to evaluate updates.</p>
+        <textarea id="t11-input">[
+  {
+    "student1": { "subject1": 44, "subject2": 56, "subject3": 87, "subject4": 97, "subject5": 37 },
+    "student2": { "subject1": 44, "subject2": 56, "subject3": 87, "subject4": 97, "subject5": 37 },
+    "student3": { "subject1": 44, "subject2": 56, "subject3": 87, "subject4": 97, "subject5": 37 }
+  }
+]</textarea>
+        <button onclick="executeT11()">Parse Object Map Liability</button>
+        <div id="out11" class="console">Awaiting runtime nested validation arrays compiles...</div>
+    </div>
+    <script>
+        function executeT11() {
+            const containerBox = document.getElementById('out11');
+            try {
+                let dataset = JSON.parse(document.getElementById('t11-input').value);
+                let corePayload = dataset[0];
+                let outputLogStructure = {};
+
+                Object.keys(corePayload).forEach(studentKey => {
+                    let marksObj = corePayload[studentKey];
+                    let scoreArr = Object.values(marksObj);
+                    let sum = scoreArr.reduce((acc, curr) => acc + curr, 0);
+                    outputLogStructure[studentKey] = { average: Math.round(sum / scoreArr.length) };
+                });
+
+                containerBox.style.color = "#34d399";
+                containerBox.innerText = "Output JSON Map Formatted Structure =>\n" + JSON.stringify([outputLogStructure], null, 4);
+            } catch(err) {
+                containerBox.style.color = "#f43f5e";
+                containerBox.innerText = "Syntax Calculation Error: Deep nested JSON formatting keys structural anomaly detected.";
+            }
+        }
+    </script>
+</body>
+</html>

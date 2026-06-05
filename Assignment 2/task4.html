@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Task 4 — Digits Product Sum</title>
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1e1540 0%, #060814 100%);
+            color: #ffffff;
+            font-family: system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        h2 { color: #6366f1; text-align: center; margin-top: 0; }
+        .input-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        input {
+            padding: 12px;
+            background: #09090b;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #4f46e5; }
+        .result-box {
+            background: #04060d;
+            border: 1px solid #1f2937;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 18px;
+            color: #34d399;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Task 4: Digit Product Sum</h2>
+        <div class="input-group">
+            <input type="number" id="n1" value="6" placeholder="Enter n1 (e.g. 6)">
+            <input type="number" id="n2" value="34" placeholder="Enter n2 (e.g. 34)">
+        </div>
+        <button onclick="runProductSum()">Compute Digits Matrix</button>
+        <div id="result" class="result-box">Awaiting vector inputs...</div>
+    </div>
+
+    <script>
+        function computeSum(n1, n2) {
+            let s1 = Math.abs(n1).toString();
+            let s2 = Math.abs(n2).toString();
+            let sum = 0;
+            let i = s1.length - 1;
+            let j = s2.length - 1;
+
+            while (i >= 0 && j >= 0) {
+                sum += (parseInt(s1[i]) * parseInt(s2[j]));
+                i--;
+                j--;
+            }
+            return sum;
+        }
+
+        function runProductSum() {
+            const num1 = parseInt(document.getElementById('n1').value);
+            const num2 = parseInt(document.getElementById('n2').value);
+            const resBox = document.getElementById('result');
+
+            if (isNaN(num1) || isNaN(num2)) {
+                resBox.innerText = "Please provide both numbers.";
+                resBox.style.color = "#f43f5e";
+                return;
+            }
+
+            resBox.style.color = "#34d399";
+            resBox.innerText = "Calculated Product Sum => " + computeSum(num1, num2);
+        }
+    </script>
+</body>
+</html>

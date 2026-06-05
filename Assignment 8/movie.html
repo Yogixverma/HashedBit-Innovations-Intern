@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡CYBER★PLEX - Next-Gen Movie Booking</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body style="margin: 0; background-color: #0d0c1d;">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Local folder structure mapping array for 4x4 matrix grid layout
+        const MOVIES_DATA = [
+          { id: 1, title: "Inception", genre: "Sci-Fi/Thriller", duration: "148 mins", image: "./inception.jpg" },
+          { id: 2, title: "The Dark Knight", genre: "Action/Crime", duration: "152 mins", image: "./dark_knight.jpg" },
+          { id: 3, title: "Interstellar", genre: "Sci-Fi/Adventure", duration: "169 mins", image: "./interstellar.jpg" },
+          { id: 4, title: "Avatar: The Way of Water", genre: "Sci-Fi/Fantasy", duration: "192 mins", image: "./avatar.jpg" },
+          { id: 5, title: "3 Idiots", genre: "Comedy/Drama", duration: "170 mins", image: "./3_idiots.jpg" },
+          { id: 6, title: "Dangal", genre: "Biography/Sports", duration: "161 mins", image: "./dangal.jpg" },
+          { id: 7, title: "Pathaan", genre: "Action/Thriller", duration: "146 mins", image: "./pathaan.jpg" },
+          { id: 8, title: "Sholay", genre: "Action/Drama", duration: "204 mins", image: "./sholay.jpg" },
+          { id: 9, title: "Baahubali 2", genre: "Action/Fantasy", duration: "167 mins", image: "./baahubali.jpg" },
+          { id: 10, title: "K.G.F: Chapter 2", genre: "Action/Crime", duration: "168 mins", image: "./kgf.jpg" },
+          { id: 11, title: "RRR", genre: "Action/Drama", duration: "187 mins", image: "./rrr.jpg" },
+          { id: 12, title: "Oppenheimer", genre: "Biography/History", duration: "180 mins", image: "./oppenheimer.jpg" },
+          { id: 13, title: "Spider-Man: Spider-Verse", genre: "Animation/Sci-Fi", duration: "140 mins", image: "./spider_man.jpg" },
+          { id: 14, title: "Zindagi Na Milegi Dobara", genre: "Drama/Comedy", duration: "155 mins", image: "./znmd.jpg" },
+          { id: 15, title: "The Avengers", genre: "Action/Sci-Fi", duration: "143 mins", image: "./avengers.jpg" },
+          { id: 16, title: "Tumbbad", genre: "Horror/Fantasy", duration: "104 mins", image: "./tumbbad.jpg" }
+        ];
+
+        function MovieBooking() {
+          const [step, setStep] = React.useState(1);
+          const [selectedMovie, setSelectedMovie] = React.useState(null);
+          const [selectedSeat, setSelectedSeat] = React.useState(null);
+          const [formData, setFormData] = React.useState({ name: '', email: '', mobile: '' });
+          const [bookingId, setBookingId] = React.useState('');
+
+          const seats = Array.from({ length: 24 }, (_, i) => `S-${i + 1}`);
+
+          const handleMovieSelect = (movie) => {
+            setSelectedMovie(movie);
+            setStep(2);
+          };
+
+          const handleSeatSelect = (seat) => {
+            setSelectedSeat(seat);
+            setStep(3);
+          };
+
+          const handleFormSubmit = (e) => {
+            e.preventDefault();
+            const generatedId = 'BKG-' + Math.floor(100000 + Math.random() * 900000);
+            setBookingId(generatedId);
+            setStep(4);
+          };
+
+          const resetFlow = () => {
+            setSelectedMovie(null);
+            setSelectedSeat(null);
+            setFormData({ name: '', email: '', mobile: '' });
+            setBookingId('');
+            setStep(1);
+          };
+
+          return (
+            <div style={styles.container}>
+              <header style={styles.header}>
+                <h1 style={styles.brandTitle}>⚡CYBER★PLEX</h1>
+                <p style={styles.subtitle}>Step {step} of 4</p>
+              </header>
+
+              {/* Page 1: 4x4 Grid Block */}
+              {step === 1 && (
+                <div style={styles.mainWrapper}>
+                  <h2 style={styles.sectionHeading}>Now Showing</h2>
+                  <div style={styles.movieGrid}>
+                    {MOVIES_DATA.map((movie) => (
+                      <div key={movie.id} style={styles.movieCard} onClick={() => handleMovieSelect(movie)}>
+                        <img 
+                          src={movie.image} 
+                          alt={movie.title} 
+                          style={styles.poster} 
+                          onError={(e) => { e.target.src = 'https://placehold.co/300x450/1a1830/ff007f?text=' + movie.title }}
+                        />
+                        <div style={styles.movieInfo}>
+                          <h3 style={styles.movieTitle}>{movie.title}</h3>
+                          <p style={styles.movieMeta}>{movie.genre} • {movie.duration}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Page 2: Seat Selection Panel */}
+              {step === 2 && (
+                <div style={styles.panel}>
+                  <h2 style={styles.sectionHeading}>Select Your Seat for {selectedMovie.title}</h2>
+                  <div style={styles.screenDriver}>SCREEN THIS WAY</div>
+                  <div style={styles.seatGrid}>
+                    {seats.map((seat) => (
+                      <button key={seat} style={styles.seatButton} onClick={() => handleSeatSelect(seat)}>{seat}</button>
+                    ))}
+                  </div>
+                  <button style={styles.backBtn} onClick={() => setStep(1)}>← Back</button>
+                </div>
+              )}
+
+              {/* Page 3: Checkout (Now Centered Perfectly) */}
+              {step === 3 && (
+                <div style={styles.panel}>
+                  <h2 style={styles.sectionHeading}>Checkout Details</h2>
+                  <p style={styles.summaryText}>Movie: <strong style={{color: '#ff007f'}}>{selectedMovie.title}</strong> | Seat: <strong style={{color: '#eec643'}}>{selectedSeat}</strong></p>
+                  <form onSubmit={handleFormSubmit} style={styles.formLayout}>
+                    <input type="text" placeholder="Full Name" required style={styles.inputField} value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                    <input type="email" placeholder="Email ID" required style={styles.inputField} value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                    <input type="tel" placeholder="Mobile Number" required style={styles.inputField} value={formData.mobile} onChange={(e) => setFormData({...formData, mobile: e.target.value})} />
+                    <button type="submit" style={styles.submitBtn}>Confirm Booking</button>
+                  </form>
+                  <button style={styles.backBtn} onClick={() => setStep(2)}>← Back to Seats</button>
+                </div>
+              )}
+
+              {/* Page 4: Confirmation Screen */}
+              {step === 4 && (
+                <div style={styles.successTicket}>
+                  <div style={styles.ticketHeader}>BOOKING CONFIRMED 🎉</div>
+                  <div style={styles.ticketBody}>
+                    <p style={styles.idLine}>Ticket ID: <span style={styles.highlightText}>{bookingId}</span></p>
+                    <h3 style={styles.ticketMovieTitle}>{selectedMovie.title}</h3>
+                    <p style={styles.ticketDetail}>Seat: <strong>{selectedSeat}</strong></p>
+                    <hr style={styles.divider} />
+                    <p style={styles.ticketUser}>Passenger: {formData.name}</p>
+                    <p style={styles.ticketUser}>Email: {formData.email}</p>
+                    <p style={styles.ticketUser}>Phone: {formData.mobile}</p>
+                    <button style={styles.resetBtn} onClick={resetFlow}>Book Another Movie</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        }
+
+        // Global Centering Layout Matrix Structure
+        const styles = {
+          container: { 
+            color: '#ffffff', 
+            minHeight: '100vh', 
+            padding: '2rem', 
+            fontFamily: 'system-ui, sans-serif',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            boxSizing: 'border-box',
+            backgroundColor: '#0d0c1d'
+          },
+          header: { 
+            width: '100%',
+            maxWidth: '960px',
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            borderBottom: '2px dashed #ff007f', 
+            paddingBottom: '1rem', 
+            marginBottom: '2rem' 
+          },
+          brandTitle: { color: '#ff007f', letterSpacing: '3px', margin: 0, fontWeight: '900' },
+          subtitle: { color: '#eec643', margin: 0, fontWeight: 'bold' },
+          mainWrapper: { width: '100%', maxWidth: '960px' },
+          sectionHeading: { color: '#eec643', marginBottom: '1.5rem', fontWeight: '600' },
+          movieGrid: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', width: '100%' },
+          movieCard: { backgroundColor: '#1a1830', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', border: '1px solid #ff007f33', transition: 'transform 0.2s' },
+          poster: { width: '100%', height: '340px', objectFit: 'cover', objectPosition: 'center', borderBottom: '2px solid #ff007f22' },
+          movieInfo: { padding: '1rem' },
+          movieTitle: { fontSize: '1.1rem', margin: '0 0 0.5rem 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
+          movieMeta: { fontSize: '0.85rem', color: '#a0a0b0', margin: 0 },
+          summaryText: { fontSize: '1.05rem', color: '#cbd5e1', margin: '0 0 1.5rem 0' },
+          
+          // Absolute Middle Fix for interactive panels
+          panel: { 
+            backgroundColor: '#1a1830', 
+            padding: '2.5rem', 
+            borderRadius: '16px', 
+            border: '2px solid #ff007f',
+            width: '100%',
+            maxWidth: '520px', 
+            boxSizing: 'border-box',
+            marginTop: 'auto',
+            marginBottom: 'auto',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+          },
+          screenDriver: { backgroundColor: '#333', textAlign: 'center', padding: '0.5rem', marginBottom: '2rem', borderRadius: '4px', letterSpacing: '4px', fontSize: '0.8rem', color: '#aaa' },
+          seatGrid: { display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0.75rem', marginBottom: '2rem' },
+          seatButton: { padding: '1rem', backgroundColor: '#0d0c1d', border: '1px solid #ff007f', color: '#fff', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' },
+          formLayout: { display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%', margin: '1.5rem 0' },
+          inputField: { padding: '0.85rem', borderRadius: '8px', border: '1px solid #ff007f66', backgroundColor: '#0d0c1d', color: '#fff', fontSize: '1rem', width: '100%', boxSizing: 'border-box', outline: 'none' },
+          submitBtn: { padding: '0.85rem', backgroundColor: '#ff007f', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem', width: '100%', letterSpacing: '1px' },
+          backBtn: { background: 'none', border: 'none', color: '#a0a0b0', cursor: 'pointer', textDecoration: 'underline', padding: 0 },
+          
+          successTicket: { backgroundColor: '#111', border: '2px solid #eec643', width: '100%', maxWidth: '450px', borderRadius: '16px', overflow: 'hidden', marginTop: 'auto', marginBottom: 'auto' },
+          ticketHeader: { backgroundColor: '#eec643', color: '#000', padding: '1rem', textAlign: 'center', fontWeight: 'bold', letterSpacing: '1px' },
+          ticketBody: { padding: '2rem' },
+          idLine: { fontSize: '0.9rem', color: '#888', margin: '0 0 1rem 0' },
+          highlightText: { color: '#ff007f', fontWeight: 'bold' },
+          ticketMovieTitle: { fontSize: '1.8rem', margin: '0 0 0.5rem 0', color: '#fff' },
+          ticketDetail: { color: '#eec643', margin: '0 0 1rem 0' },
+          divider: { border: 'none', borderTop: '1px dashed #444', margin: '1.5rem 0' },
+          ticketUser: { margin: '0.3rem 0', color: '#ccc', fontSize: '0.95rem' },
+          resetBtn: { marginTop: '1.5rem', width: '100%', padding: '0.75rem', backgroundColor: '#333', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer' }
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<MovieBooking />);
+    </script>
+</body>
+</html>

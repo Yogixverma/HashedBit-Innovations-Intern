@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Task 1 — Even Numbers</title>
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1e1540 0%, #060814 100%);
+            color: #ffffff;
+            font-family: system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        h2 { color: #6366f1; margin-top: 0; }
+        button {
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover { background-color: #4f46e5; }
+        .output-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 6px;
+            background: #04060d;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #1f2937;
+        }
+        .pill {
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            padding: 6px 0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Task 1: Even Numbers (1 to 100)</h2>
+        <p style="color: #94a3b8;">Click the button below to generate even sequence pipeline.</p>
+        <button onclick="generateEven()">Generate List</button>
+        <div id="output" class="output-grid" style="display: none;"></div>
+    </div>
+
+    <script>
+        function generateEven() {
+            const outDiv = document.getElementById('output');
+            let htmlContent = '';
+            for (let i = 1; i <= 100; i++) {
+                if (i % 2 === 0) {
+                    htmlContent += `<div class="pill">${i}</div>`;
+                }
+            }
+            outDiv.innerHTML = htmlContent;
+            outDiv.style.display = 'grid';
+        }
+    </script>
+</body>
+</html>

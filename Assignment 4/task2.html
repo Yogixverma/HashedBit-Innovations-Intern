@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Task 2 — Div Creation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; background: #060814; color: white; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; }
+        .card { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2.5rem; max-width: 640px; width: 100%; box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
+        h3 { color: #6366f1; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.4rem; margin-top: 0; }
+        .inputs { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; align-items: flex-end; flex-wrap: wrap; }
+        .field { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; min-width: 120px; }
+        .field label { color: #64748b; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        input { width: 100%; padding: 0.75rem; background: #09090b; border: 1px solid #334155; color: white; border-radius: 8px; outline: none; box-sizing: border-box; }
+        
+        button { border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+        .btn-create { background: #6366f1; color: white; }
+        .btn-create:hover { background: #4f46e5; }
+        .btn-clear { background: #f43f5e; color: white; }
+        .btn-clear:hover { background: #e11d48; }
+
+        #container { min-height: 120px; display: flex; flex-wrap: wrap; gap: 10px; padding: 15px; background: #ffffff; border: 2px dashed #cbd5e1; border-radius: 12px; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h3>Task 02: Dynamic Div Creation</h3>
+        <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.5rem;">Creates new block divs appending dimensions directly inside the container parent element tree.</p>
+        
+        <div class="inputs">
+            <div class="field"><label>Width</label><input type="number" id="t2-w" value="130"></div>
+            <div class="field"><label>Height</label><input type="number" id="t2-h" value="60"></div>
+            <div class="field" style="flex: 1.5;"><label>Text Content</label><input type="text" id="t2-txt" value="Hello"></div>
+            
+            <button class="button btn-create" onclick="triggerCreate()">Create Div</button>
+            <button class="button btn-clear" onclick="clearContainer()">Clear</button>
+        </div>
+
+        <div id="container"></div>
+    </div>
+
+    <script>
+        function createDiv(width, height, text) {
+            const container = document.getElementById('container');
+            const newDiv = document.createElement('div');
+            
+            newDiv.style.width = width + "px";
+            newDiv.style.height = height + "px";
+            newDiv.innerText = text;
+            
+            newDiv.style.background = "#6366f1";
+            newDiv.style.color = "white";
+            newDiv.style.display = "flex";
+            newDiv.style.justifyContent = "center";
+            newDiv.style.alignItems = "center";
+            newDiv.style.borderRadius = "6px";
+            newDiv.style.fontSize = "0.9rem";
+            newDiv.style.padding = "4px";
+            newDiv.style.boxSizing = "border-box";
+            
+            container.appendChild(newDiv);
+        }
+
+        function triggerCreate() {
+            let w = document.getElementById('t2-w').value;
+            let h = document.getElementById('t2-h').value;
+            let txt = document.getElementById('t2-txt').value;
+            createDiv(w, h, txt);
+        }
+
+        // Clear Trigger Function
+        function clearContainer() {
+            document.getElementById('container').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

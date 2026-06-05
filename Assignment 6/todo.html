@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProTask Workspace</title>
+    <!-- Fallback Clean UI Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: radial-gradient(circle at top, #1e1b4b 0%, #09090b 100%);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            max-width: 640px;
+            background-color: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.1);
+            box-sizing: border-box;
+        }
+        .header-zone {
+            margin-bottom: 2.25rem;
+        }
+        .main-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            fontSize: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .brand-highlight {
+            color: #818cf8;
+        }
+        .sub-title-text {
+            color: #64748b;
+            margin: 0.4rem 0 0 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .form-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            align-items: center;
+            width: 100%;
+        }
+        .input-field {
+            flex: 3;
+            padding: 0.85rem 1.1rem;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background-color: #09090b;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .select-menu {
+            padding: 0.85rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background-color: #09090b;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .add-btn {
+            background-color: #4f46e5;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.85rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .add-btn:hover {
+            background-color: #4338ca;
+        }
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .empty-state-box {
+            text-align: center;
+            padding: 2.5rem 0;
+            color: #475569;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background-color: #1e293b;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            gap: 1.25rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+            box-sizing: border-box;
+        }
+        .order-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .order-btn {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.65rem;
+            padding: 3px 6px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .order-btn:hover {
+            color: #fff;
+        }
+        .todo-content {
+            flex: 1;
+        }
+        .text-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+        .todo-text {
+            font-size: 1.05rem;
+            color: #f8fafc;
+            font-weight: 500;
+        }
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .action-block {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .edit-btn, .save-btn, .delete-btn {
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .edit-btn { background-color: #334155; color: #e2e8f0; }
+        .save-btn { background-color: #059669; color: #fff; }
+        .delete-btn { background-color: rgba(244, 63, 94, 0.1); color: #fb7185; }
+        .inline-edit-input {
+            width: 95%;
+            padding: 0.5rem;
+            background: #09090b;
+            color: #fff;
+            border: 1px solid #6366f1;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header-zone">
+            <h1 class="main-title">ProTask <span class="brand-highlight">Workspace</span></h1>
+            <p class="sub-title-text">Optimize your development sprint workflow</p>
+        </div>
+        
+        <!-- Form Setup -->
+        <div class="form-group">
+            <input type="text" id="taskInput" placeholder="Enter task objective..." class="input-field">
+            <select id="priorityInput" class="select-menu">
+                <option value="1">🔴 High</option>
+                <option value="2" selected>🟡 Medium</option>
+                <option value="3">🟢 Low</option>
+            </select>
+            <button onclick="addTask()" class="add-btn">Add Task</button>
+        </div>
+
+        <!-- Dynamic List -->
+        <div id="listContainer" class="list-container">
+            <div class="empty-state-box">All pipeline objectives clear.</div>
+        </div>
+    </div>
+
+    <!-- Core Dynamic Script Logic -->
+    <script>
+        let todos = [];
+
+        function renderTodos() {
+            const container = document.getElementById('listContainer');
+            if (todos.length === 0) {
+                container.innerHTML = '<div class="empty-state-box">All pipeline objectives clear.</div>';
+                return;
+            }
+
+            container.innerHTML = '';
+            todos.forEach((todo, index) => {
+                let borderCol = todo.priority === '1' ? '#f43f5e' : todo.priority === '2' ? '#fbbf24' : '#10b981';
+                let badgeBg = todo.priority === '1' ? 'rgba(244, 63, 94, 0.1)' : todo.priority === '2' ? 'rgba(251, 191, 36, 0.1)' : 'rgba(16, 185, 129, 0.1)';
+                let badgeCol = todo.priority === '1' ? '#f43f5e' : todo.priority === '2' ? '#fbbf24' : '#10b981';
+                let pText = todo.priority === '1' ? 'High' : todo.priority === '2' ? 'Medium' : 'Low';
+
+                let itemHtml = `
+                    <div class="todo-item" style="border-left: 4px solid ${borderCol}">
+                        <div class="order-controls">
+                            <button class="order-btn" onclick="moveUp(${index})">▲</button>
+                            <button class="order-btn" onclick="moveDown(${index})">▼</button>
+                        </div>
+                        <div class="todo-content" id="content-${todo.id}">
+                            <div class="text-group">
+                                <span class="todo-text">${todo.text}</span>
+                                <span class="badge" style="background-color: ${badgeBg}; color: ${badgeCol}">${pText}</span>
+                            </div>
+                        </div>
+                        <div class="action-block" id="actions-${todo.id}">
+                            <button class="edit-btn" onclick="startEdit(${todo.id}, '${todo.text.replace(/'/g, "\\'")}')">Edit</button>
+                            <button class="delete-btn" onclick="deleteTask(${todo.id})">Delete</button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const priority = document.getElementById('priorityInput').value;
+            if (!input.value.trim()) return;
+
+            todos.push({
+                id: Date.now(),
+                text: input.value.trim(),
+                priority: priority
+            });
+
+            input.value = ''; // Clear input box automatically
+            renderTodos();
+        }
+
+        function deleteTask(id) {
+            todos = todos.filter(t => t.id !== id);
+            renderTodos();
+        }
+
+        function moveUp(index) {
+            if (index === 0) return;
+            let temp = todos[index];
+            todos[index] = todos[index - 1];
+            todos[index - 1] = temp;
+            renderTodos();
+        }
+
+        function moveDown(index) {
+            if (index === todos.length - 1) return;
+            let temp = todos[index];
+            todos[index] = todos[index + 1];
+            todos[index + 1] = temp;
+            renderTodos();
+        }
+
+        function startEdit(id, text) {
+            document.getElementById(`content-${id}`).innerHTML = `<input type="text" id="edit-input-${id}" value="${text}" class="inline-edit-input">`;
+            document.getElementById(`actions-${id}`).innerHTML = `
+                <button class="save-btn" onclick="saveEdit(${id})">Save</button>
+                <button class="delete-btn" onclick="renderTodos()">Cancel</button>
+            `;
+        }
+
+        function saveEdit(id) {
+            const val = document.getElementById(`edit-input-${id}`).value;
+            if (!val.trim()) return;
+            todos = todos.map(t => t.id === id ? { ...t, text: val.trim() } : t);
+            renderTodos();
+        }
+    </script>
+</body>
+</html>

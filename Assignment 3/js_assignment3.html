@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Assignment 3 Engine</title>
+    <style>
+        body {
+            background: radial-gradient(circle at top, #141b2d 0%, #090d16 100%);
+            color: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem 1rem;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 760px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .header h1 span { color: #6366f1; }
+        .header p { color: #64748b; margin: 0.4rem 0 0 0; text-transform: uppercase; font-weight: 600; font-size: 0.9rem; }
+        
+        .task-card {
+            background-color: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .task-num { color: #6366f1; font-weight: 700; margin-bottom: 0.25rem; font-size: 0.95rem; text-transform: uppercase; }
+        .task-prompt { margin: 0 0 1.25rem 0; font-size: 1.05rem; color: #e2e8f0; font-weight: 500; line-height: 1.5; }
+        
+        .controls-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+        input, select {
+            background: #09090b;
+            color: white;
+            border: 1px solid #334155;
+            padding: 0.65rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            font-family: inherit;
+        }
+        button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        button:hover { background: #4338ca; }
+        
+        .console-box {
+            background-color: #04060d;
+            border: 1px solid #1f2937;
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: #34d399;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>JS <span>Assignment 3</span></h1>
+            <p>Data Arrays & Strings Engineering Matrix</p>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 01</div>
+            <p class="task-prompt">Create an array of states in India. Remove all names starting with vowels using array.filter.</p>
+            <div class="controls-row">
+                <button onclick="runQ1()">Filter Vowel States</button>
+            </div>
+            <div id="out1" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 02</div>
+            <p class="task-prompt">Reverse word order: Convert 'I love my India' to 'India my love I'.</p>
+            <div class="controls-row">
+                <input type="text" id="q2-input" value="I love my India" style="width: 260px;">
+                <button onclick="runQ2()">Reverse Order</button>
+            </div>
+            <div id="out2" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 03</div>
+            <p class="task-prompt">Convert string 'INDIA' to array layout and use array.splice to output 'INDONESIA'.</p>
+            <div class="controls-row">
+                <button onclick="runQ3()">Execute Splice</button>
+            </div>
+            <div id="out3" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 04</div>
+            <p class="task-prompt">Count total vowels and consonants in a string (Minimum 20 characters length filter).</p>
+            <div class="controls-row">
+                <input type="text" id="q4-input" value="Beautiful Royal Forts of Jodhpur Rajasthan" style="width: 360px;">
+                <button onclick="runQ4()">Analyze Vowels/Consonants</button>
+            </div>
+            <div id="out4" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 05</div>
+            <p class="task-prompt">Write correctfn(string, wrong, correct) using string.replace to fix typos in sentences.</p>
+            <div class="controls-row">
+                <input type="text" id="q5-str" value="I study at MBM Univeersity" style="width: 220px;">
+                <input type="text" id="q5-wrong" value="Univeersity" style="width: 110px;">
+                <input type="text" id="q5-right" value="University" style="width: 110px;">
+                <button onclick="runQ5()">Replace Word</button>
+            </div>
+            <div id="out5" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 06</div>
+            <p class="task-prompt">Filter out numbers greater than 5 from input array [1,2,3,9,10,7,5,4,3].</p>
+            <div class="controls-row">
+                <button onclick="runQ6()">Filter > 5</button>
+            </div>
+            <div id="out6" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 07</div>
+            <p class="task-prompt">Map array of objects to compute student average scores using array.map and array.reduce.</p>
+            <div class="controls-row">
+                <button onclick="runQ7()">Compute Array Averages</button>
+            </div>
+            <div id="out7" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 08</div>
+            <p class="task-prompt">Find repeated sum of digits until result reduces to a single digit (e.g., 456 -> 15 -> 6).</p>
+            <div class="controls-row">
+                <input type="number" id="q8-input" value="456" style="width: 120px;">
+                <button onclick="runQ8()">Reduce Digits</button>
+            </div>
+            <div id="out8" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 09</div>
+            <p class="task-prompt">Count total number of individual words contained inside a paragraph block string.</p>
+            <div class="controls-row">
+                <input type="text" id="q9-input" value="The incredible blue city landscape of Jodhpur Rajasthan India" style="width: 380px;">
+                <button onclick="runQ9()">Count Words</button>
+            </div>
+            <div id="out9" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 10</div>
+            <p class="task-prompt">Write a custom standalone function to completely reverse an input string structure.</p>
+            <div class="controls-row">
+                <input type="text" id="q10-input" value="Hello" style="width: 150px;">
+                <button onclick="runQ10()">Reverse Text</button>
+            </div>
+            <div id="out10" class="console-box">Awaiting operational log...</div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-num">Question 11</div>
+            <p class="task-prompt">Advanced JSON Parser: Calculate complex deep nested student object averages using Object methods.</p>
+            <div class="controls-row">
+                <button onclick="runQ11()">Parse Object Map</button>
+            </div>
+            <div id="out11" class="console-box">Awaiting operational log...</div>
+        </div>
+    </div>
+
+    <script>
+        // Q1: Filter states starting with Vowels
+        function runQ1() {
+            const states = ["Rajasthan", "Assam", "Goa", "Odisha", "Punjab", "Bihar", "Kerala", "Uttar Pradesh", "Andhra Pradesh"];
+            const filtered = states.filter(state => {
+                let firstLetter = state.charAt(0).toLowerCase();
+                return !['a', 'e', 'i', 'o', 'u'].includes(firstLetter);
+            });
+            document.getElementById('out1').innerText = `Original List: [${states.join(', ')}]\nFiltered List (No Vowel Start): [${filtered.join(', ')}]`;
+        }
+
+        // Q2: Reverse word tokens sequence order
+        function runQ2() {
+            let srcStr = document.getElementById('q2-input').value;
+            let resStr = srcStr.split(' ').reverse().join(' ');
+            document.getElementById('out2').innerText = `Input: '${srcStr}'\nOutput: '${resStr}'`;
+        }
+
+        // Q3: Use splice to mutate array sequence to 'INDONESIA'
+        function runQ3() {
+            let str = 'INDIA';
+            let arr = str.split(''); // ['I', 'N', 'D', 'I', 'A']
+            
+            // Removing 'I', 'A' from the index 3 positions and appending characters array map
+            arr.splice(3, 2, 'O', 'N', 'E', 'S', 'I', 'A');
+            let computedResult = arr.join('');
+            document.getElementById('out3').innerText = `Initial Word Core: 'INDIA'\nAfter Array Splice Interlock: '${computedResult}'`;
+        }
+
+        // Q4: Count vowels and consonants metrics
+        function runQ4() {
+            let targetStr = document.getElementById('q4-input').value;
+            const logBox = document.getElementById('out4');
+            
+            if (targetStr.length < 20) {
+                logBox.innerText = `Validation Alert: String length must contain minimum 20 characters (Current size: ${targetStr.length}).`;
+                logBox.style.color = "#f43f5e";
+                return;
+            }
+            
+            let cleanStr = targetStr.toLowerCase();
+            let vowelsCount = 0;
+            let consonantsCount = 0;
+            
+            for(let i = 0; i < cleanStr.length; i++) {
+                let ch = cleanStr.charAt(i);
+                if (ch >= 'a' && ch <= 'z') {
+                    if (['a','e','i','o','u'].includes(ch)) vowelsCount++;
+                    else consonantsCount++;
+                }
+            }
+            logBox.style.color = "#34d399";
+            logBox.innerText = `Verified Text String Length: ${targetStr.length} characters\nTotal Vowels Computed: ${vowelsCount}\nTotal Consonants Computed: ${consonantsCount}`;
+        }
+
+        // Q5: Substitution dynamic string.replace controller
+        function correctfn(string, wrong, correct) {
+            return string.replace(wrong, correct);
+        }
+        function runQ5() {
+            let s = document.getElementById('q5-str').value;
+            let w = document.getElementById('q5-wrong').value;
+            let r = document.getElementById('q5-right').value;
+            document.getElementById('out5').innerText = `Result Output Log => "${correctfn(s, w, r)}"`;
+        }
+
+        // Q6: Array numbers parsing pipeline filter
+        function runQ6() {
+            let inputArr = [1, 2, 3, 9, 10, 7, 5, 4, 3];
+            let values = inputArr.filter(num => num > 5);
+            document.getElementById('out6').innerText = `Source Array Vector: [${inputArr.join(', ')}]\nElements Greater Than 5: [${values.join(', ')}]`;
+        }
+
+        // Q7: Objects reduction inside student datasets tracking score metrics
+        function runQ7() {
+            const students = [
+                { name: "Ram", scores: [80, 70, 60] },
+                { name: "Mohan", scores: [80, 70, 90] },
+                { name: "Sai", scores: [60, 70, 80] },
+                { name: "Hemang", scores: [90, 90, 80, 80] }
+            ];
+            
+            let computedOutput = students.map(student => {
+                let currentScoreSum = student.scores.reduce((accumulator, currentVal) => accumulator + currentVal, 0);
+                let scoreAvg = currentScoreSum / student.scores.length;
+                return { name: student.name, average: Math.round(scoreAvg) };
+            });
+            
+            document.getElementById('out7').innerText = JSON.stringify(computedOutput, null, 4);
+        }
+
+        // Q8: Digital sum contraction loops
+        function runQ8() {
+            let numVal = parseInt(document.getElementById('q8-input').value);
+            let baseNum = numVal;
+            
+            while (numVal >= 10) {
+                let tempSum = 0;
+                let currentStr = Math.abs(numVal).toString();
+                for (let k = 0; k < currentStr.length; k++) {
+                    tempSum += parseInt(currentStr.charAt(k));
+                }
+                numVal = tempSum;
+            }
+            document.getElementById('out8').innerText = `Starting Integer Value Input: ${baseNum}\nReduced Single Digit Product Value Output Matrix => ${numVal}`;
+        }
+
+        // Q9: String token spacing split count analyzer
+        function runQ9() {
+            let lineInput = document.getElementById('q9-input').value.trim();
+            if (lineInput === "") {
+                document.getElementById('out9').innerText = "Word Count Metrics Total: 0 words.";
+                return;
+            }
+            let lengthMetrics = lineInput.split(/\s+/).length;
+            document.getElementById('out9').innerText = `Processed String Block: "${lineInput}"\nWord Count Metrics Total => ${lengthMetrics} words`;
+        }
+
+        // Q10: Inline text arrays string reverser
+        function runQ10() {
+            let dataStr = document.getElementById('q10-input').value;
+            let outStr = dataStr.split('').reverse().join('');
+            document.getElementById('out10').innerText = `Input Character Array Target: "${dataStr}"\nComputed Reversal Array Output => "${outStr}"`;
+        }
+
+        // Q11: Deep nested Object methods calculation loop execution
+        function runQ11() {
+            const nestedDataset = [
+                {
+                    student1: { subject1: 44, subject2: 56, subject3: 87, subject4: 97, subject5: 37 },
+                    student2: { subject1: 44, subject2: 56, subject3: 87, subject4: 97, subject5: 37 },
+                    student3: { subject1: 44, subject2: 56, subject3: 87, subject4: 97, subject5: 37 }
+                }
+            ];
+            
+            let sourcePayload = nestedDataset[0];
+            let resultContainer = {};
+            
+            Object.keys(sourcePayload).forEach(studentKey => {
+                let targetMarksObject = sourcePayload[studentKey];
+                let scoreArray = Object.values(targetMarksObject);
+                
+                let sumScore = scoreArray.reduce((acc, curr) => acc + curr, 0);
+                let parsedAverage = sumScore / scoreArray.length;
+                
+                // Formats to match assignment display logic format parameters directly
+                resultContainer[studentKey] = { average: Math.round(parsedAverage) };
+            });
+            
+            document.getElementById('out11').innerText = "Output JSON Array Structure Formatted:\n" + JSON.stringify([resultContainer], null, 4);
+        }
+    </script>
+</body>
+</html>

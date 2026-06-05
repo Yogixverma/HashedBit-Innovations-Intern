@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 TATA IPL 2026 - Ultimate Analytics Dashboard</title>
+    <!-- React & Babel CDN Libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Google Fonts for Premium Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(238, 198, 67, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(238, 198, 67, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(238, 198, 67, 0.2); }
+        }
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        body::-webkit-scrollbar-track {
+            background: #060913;
+        }
+        body::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 999px;
+        }
+    </style>
+</head>
+<body style="margin: 0; background: radial-gradient(circle at top, #0f172a 0%, #05070f 100%); min-height: 100vh; overflow-x: hidden;">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function PremiumIplDashboard() {
+          // Comprehensive IPL 2026 Matrix Data with Team Primary Color Codes
+          const [teams] = React.useState([
+            { rank: 1, name: "Kolkata Knight Riders", short: "KKR", matches: 14, won: 10, lost: 4, nrr: 1.428, points: 20, color: "#3a225d" },
+            { rank: 2, name: "Rajasthan Royals", short: "RR", matches: 14, won: 9, lost: 5, nrr: 0.273, points: 18, color: "#ea1a85" },
+            { rank: 3, name: "Sunrisers Hyderabad", short: "SRH", matches: 14, won: 8, lost: 6, nrr: 0.414, points: 16, color: "#ff5311" },
+            { rank: 4, name: "Royal Challengers Bengaluru", short: "RCB", matches: 14, won: 7, lost: 7, nrr: 0.387, points: 14, color: "#2b2b2c" },
+            { rank: 5, name: "Chennai Super Kings", short: "CSK", matches: 14, won: 7, lost: 7, nrr: 0.315, points: 14, color: "#fcc419" },
+            { rank: 6, name: "Delhi Capitals", short: "DC", matches: 14, won: 7, lost: 7, nrr: -0.377, points: 14, color: "#17439e" },
+            { rank: 7, name: "Lucknow Super Giants", short: "LSG", matches: 14, won: 7, lost: 7, nrr: -0.667, points: 14, color: "#0057e2" },
+            { rank: 8, name: "Gujarat Titans", short: "GT", matches: 14, won: 6, lost: 8, nrr: -0.162, points: 12, color: "#0b2240" },
+            { rank: 9, name: "Punjab Kings", short: "PBKS", matches: 14, won: 5, lost: 9, nrr: -0.353, points: 10, color: "#dd1d22" },
+            { rank: 10, name: "Mumbai Indians", short: "MI", matches: 14, won: 4, lost: 10, nrr: -0.318, points: 8, color: "#004ba0" }
+          ]);
+
+          // STRICT AUTOMATIC SORT LAYER (Guarantees rank sorting perfection)
+          const sortedTeams = [...teams].sort((a, b) => {
+            if (b.points !== a.points) {
+              return b.points - a.points;
+            }
+            return b.nrr - a.nrr;
+          });
+
+          return (
+            <div style={styles.wrapper}>
+              <div style={styles.dashboardContainer}>
+                
+                {/* Upper Glassmorphic Hero Banner Component */}
+                <div style={styles.heroBanner}>
+                  <div style={styles.leftBrand}>
+                    <img 
+                      src="https://upload.wikimedia.org/wikipedia/en/8/84/Indian_Premier_League_Official_Logo.svg" 
+                      alt="IPL Official Logo" 
+                      style={styles.logoScale}
+                    />
+                    <div style={styles.brandTextGroup}>
+                      <h1 style={styles.mainTitle}>TATA IPL 2026</h1>
+                      <p style={styles.subTitleText}>LIVE LEAGUE ANALYTICS MATRIX</p>
+                    </div>
+                  </div>
+                  <div style={styles.rightStats}>
+                    <div style={styles.statMiniCard}>
+                      <span style={styles.miniLabel}>SEASON</span>
+                      <span style={styles.miniValue}>2026</span>
+                    </div>
+                    <div style={styles.statMiniCard}>
+                      <span style={styles.miniLabel}>STATUS</span>
+                      <span style={{...styles.miniValue, color: '#10b981'}}>ACTIVE</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Main Analytical Grid Matrix */}
+                <div style={styles.tableCard}>
+                  <div style={styles.responsiveTableHolder}>
+                    <table style={styles.tableElement}>
+                      <thead>
+                        <tr style={styles.headRow}>
+                          <th style={{...styles.thCell, width: '60px'}}>POS</th>
+                          <th style={{...styles.thCell, textAlign: 'left', paddingLeft: '2rem'}}>FRANCHISE</th>
+                          <th style={styles.thCell}>MATCHES</th>
+                          <th style={styles.thCell}>WON</th>
+                          <th style={styles.thCell}>LOST</th>
+                          <th style={styles.thCell}>NET RUN RATE (NRR)</th>
+                          <th style={styles.thCellPoints}>POINTS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sortedTeams.map((team, index) => {
+                          const isPlayoffBound = index < 4;
+                          return (
+                            <tr key={team.short} style={styles.dataRow} className="table-row-hover">
+                              
+                              {/* Position Metric Column with custom badge */}
+                              <td style={styles.tdCenter}>
+                                <div style={isPlayoffBound ? styles.posBadgePlayoff : styles.posBadgeNormal}>
+                                  {index + 1}
+                                </div>
+                              </td>
+
+                              {/* Franchise Identification Layout with Colored Crest Blocks */}
+                              <td style={{...styles.tdCellData, textAlign: 'left', paddingLeft: '2rem'}}>
+                                <div style={styles.teamFlexGroup}>
+                                  <div style={{...styles.colorCrest, backgroundColor: team.color}} title={team.name} />
+                                  <span style={styles.shortToken}>{team.short}</span>
+                                  <span style={styles.fullTitleName}>{team.name}</span>
+                                  {isPlayoffBound && <span style={styles.qualifiedBadge} title="Playoffs Qualified">Q</span>}
+                                </div>
+                              </td>
+
+                              <td style={styles.tdCenterData}>{team.matches}</td>
+                              <td style={{...styles.tdCenterData, color: '#10b981', fontWeight: '700'}}>{team.won}</td>
+                              <td style={{...styles.tdCenterData, color: '#ef4444'}}>{team.lost}</td>
+                              
+                              {/* High-Contrast NRR Column */}
+                              <td style={{
+                                ...styles.tdCenterData, 
+                                color: team.nrr >= 0 ? '#34d399' : '#f87171',
+                                fontFamily: "'Orbitron', sans-serif",
+                                fontSize: '0.95rem'
+                              }}>
+                                {team.nrr > 0 ? `+${team.nrr.toFixed(3)}` : team.nrr.toFixed(3)}
+                              </td>
+
+                              {/* Glowing Points Standout Cell */}
+                              <td style={{...styles.tdCenterData, position: 'relative'}}>
+                                <span style={{
+                                  ...styles.pointsTypography,
+                                  color: isPlayoffBound ? '#eec643' : '#f3f4f6',
+                                  textShadow: isPlayoffBound ? '0 0 10px rgba(238, 198, 67, 0.4)' : 'none'
+                                }}>
+                                  {team.points}
+                                </span>
+                              </td>
+
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <footer style={styles.footerZone}>
+                  <p>Designed Matrix System • React Standing Engine v2.6 • Auto-Sorted by computational NRR indices.</p>
+                </footer>
+
+              </div>
+            </div>
+          );
+        }
+
+        // Executive UI Styling Object (Futuristic Sports Premium Theme)
+        const styles = {
+          wrapper: {
+            padding: '3rem 2rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100vh',
+            boxSizing: 'border-box'
+          },
+          dashboardContainer: {
+            width: '100%',
+            maxWidth: '1050px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem'
+          },
+          heroBanner: {
+            background: 'rgba(30, 41, 59, 0.4)',
+            backdropFilter: 'blur(16px)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '20px',
+            padding: '1.5rem 2.5rem',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '1.5rem',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+            animation: 'pulseGlow 4s infinite ease-in-out'
+          },
+          leftBrand: { display: 'flex', alignItems: 'center', gap: '1.5rem' },
+          logoScale: { height: '65px', width: 'auto', objectFit: 'contain' },
+          brandTextGroup: { display: 'flex', flexDirection: 'column' },
+          mainTitle: {
+            fontFamily: "'Orbitron', sans-serif",
+            color: '#ffffff',
+            margin: 0,
+            fontSize: '2rem',
+            fontWeight: '800',
+            letterSpacing: '1px',
+            background: 'linear-gradient(45deg, #fff 30%, #eec643 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          },
+          subTitleText: {
+            fontFamily: "'Rajdhani', sans-serif",
+            color: '#94a3b8',
+            margin: '0.2rem 0 0 0',
+            fontSize: '0.95rem',
+            fontWeight: '700',
+            letterSpacing: '2px'
+          },
+          rightStats: { display: 'flex', gap: '1.5rem' },
+          statMiniCard: {
+            backgroundColor: 'rgba(15, 23, 42, 0.6)',
+            border: '1px solid rgba(255,255,255,0.05)',
+            padding: '0.5rem 1.25rem',
+            borderRadius: '10px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            minWidth: '80px'
+          },
+          miniLabel: { fontFamily: "'Rajdhani', sans-serif", fontSize: '0.75rem', color: '#64748b', fontWeight: '700', letterSpacing: '1px' },
+          miniValue: { fontFamily: "'Orbitron', sans-serif", fontSize: '1.1rem', color: '#f8fafc', fontWeight: '800', marginTop: '0.1rem' },
+          
+          tableCard: {
+            background: 'rgba(17, 24, 39, 0.75)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '24px',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            overflow: 'hidden',
+            boxShadow: '0 30px 60px rgba(0,0,0,0.4)'
+          },
+          responsiveTableHolder: { overflowX: 'auto' },
+          tableElement: { width: '100%', borderCollapse: 'collapse', fontFamily: "'Rajdhani', sans-serif", fontSize: '1.1rem' },
+          headRow: { background: '#090d16', borderBottom: '2px solid rgba(255,255,255,0.05)' },
+          thCell: { padding: '1.2rem 0.8rem', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px' },
+          thCellPoints: { padding: '1.2rem 0.8rem', color: '#eec643', fontWeight: '700', textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px' },
+          
+          dataRow: { 
+            borderBottom: '1px solid rgba(255,255,255,0.03)', 
+            transition: 'all 0.25s ease',
+            backgroundColor: 'transparent'
+          },
+          tdCenter: { padding: '1rem 0.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center' },
+          tdCenterData: { padding: '1rem 0.8rem', textRendering: 'optimizeLegibility', color: '#f1f5f9', textAlign: 'center' },
+          tdCellData: { padding: '1rem 0.8rem', textRendering: 'optimizeLegibility', color: '#f1f5f9' },
+          
+          posBadgePlayoff: {
+            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+            color: '#fff',
+            fontFamily: "'Orbitron', sans-serif",
+            fontWeight: '800',
+            width: '28px',
+            height: '28px',
+            borderRadius: '8px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '0.9rem',
+            boxShadow: '0 4px 10px rgba(16,185,129,0.3)'
+          },
+          posBadgeNormal: {
+            background: '#1f2937',
+            color: '#94a3b8',
+            fontFamily: "'Orbitron', sans-serif",
+            fontWeight: '800',
+            width: '28px',
+            height: '28px',
+            borderRadius: '8px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '0.9rem'
+          },
+          teamFlexGroup: { display: 'flex', alignItems: 'center', gap: '0.75rem' },
+          colorCrest: { width: '6px', height: '24px', borderRadius: '3px', boxShadow: '0 0 8px rgba(255,255,255,0.1)' },
+          shortToken: { fontFamily: "'Orbitron', sans-serif", fontWeight: '800', color: '#ffffff', fontSize: '1.1rem', letterSpacing: '0.5px' },
+          fullTitleName: { color: '#94a3b8', fontSize: '1rem', fontWeight: '500', opacity: 0.85 },
+          qualifiedBadge: {
+            backgroundColor: 'rgba(16, 185, 129, 0.15)',
+            border: '1px solid #10b981',
+            color: '#10b981',
+            fontSize: '0.7rem',
+            fontFamily: "'Orbitron', sans-serif",
+            fontWeight: '800',
+            padding: '0.1rem 0.35rem',
+            borderRadius: '4px',
+            marginLeft: 'auto',
+            marginRight: '2rem'
+          },
+          pointsTypography: { fontFamily: "'Orbitron', sans-serif", fontWeight: '800', fontSize: '1.3rem' },
+          footerZone: { textAlign: 'center', color: '#475569', fontSize: '0.85rem', letterSpacing: '0.5px', marginTop: '0.5rem' }
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<PremiumIplDashboard />);
+    </script>
+
+    <!-- Append global structural hover layout dynamics via injection script -->
+    <script>
+        setTimeout(() => {
+            const rows = document.querySelectorAll('.table-row-hover');
+            rows.forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    row.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
+                    row.style.transform = 'scaleX(1.005)';
+                    row.style.borderLeft = '4px solid #eec643';
+                });
+                row.addEventListener('mouseleave', () => {
+                    row.style.backgroundColor = 'transparent';
+                    row.style.transform = 'scaleX(1)';
+                    row.style.borderLeft = 'none';
+                });
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

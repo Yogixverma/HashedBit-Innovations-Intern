@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Assignment 3 — Task 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #060814;
+            --panel-bg: rgba(17, 24, 39, 0.7);
+            --accent-indigo: #6366f1;
+            --text-heading: #ffffff;
+            --text-body: #94a3b8;
+            --border-line: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top, #1e1540 0%, var(--bg-base) 100%);
+            color: var(--text-heading);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-line);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 560px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            box-sizing: border-box;
+        }
+
+        h3 {
+            color: var(--accent-indigo);
+            margin: 0 0 0.5rem 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .prompt {
+            color: var(--text-body);
+            font-size: 0.95rem;
+            margin: 0 0 1.5rem 0;
+            line-height: 1.5;
+        }
+
+        .flex-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .input-block label {
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: #09090b;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus {
+            border-color: var(--accent-indigo);
+        }
+
+        button {
+            background: var(--accent-indigo);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #4f46e5;
+        }
+
+        .console {
+            background: #04060d;
+            border: 1px solid #1f2937;
+            padding: 1.25rem;
+            border-radius: 14px;
+            margin-top: 1.5rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .output-label {
+            color: #475569;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-text {
+            color: #34d399;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h3>Question 03 — Array Splice Workspace</h3>
+        <p class="prompt">Convert any text string into an array layout and use the native JavaScript <code>array.splice()</code> method to perform dynamic deletions and character insertions.</p>
+        
+        <div class="flex-inputs">
+            <div class="input-block">
+                <label>Source Base Word</label>
+                <input type="text" id="t3-word" value="INDIA" placeholder="e.g. INDIA">
+            </div>
+            
+            <div class="grid-3">
+                <div class="input-block">
+                    <label>Insert Value</label>
+                    <input type="text" id="t3-insert" value="ONESIA" placeholder="e.g. ONESIA">
+                </div>
+                <div class="input-block">
+                    <label>Index (Where)</label>
+                    <input type="number" id="t3-index" value="3">
+                </div>
+                <div class="input-block">
+                    <label>Delete Count</label>
+                    <input type="number" id="t3-delete" value="2">
+                </div>
+            </div>
+        </div>
+
+        <button onclick="executeDynamicSplice()">Execute Splice Transformation</button>
+        
+        <div class="console">
+            <div class="output-label">Array Compilation Logs</div>
+            <div id="out3" class="result-text">Awaiting array operation trigger parameters...</div>
+        </div>
+    </div>
+
+    <script>
+        function executeDynamicSplice() {
+            let baseWord = document.getElementById('t3-word').value.trim();
+            let insertVal = document.getElementById('t3-insert').value.trim();
+            let spliceIndex = parseInt(document.getElementById('t3-index').value);
+            let deleteCount = parseInt(document.getElementById('t3-delete').value);
+            let outBox = document.getElementById('out3');
+
+            if (baseWord === "") {
+                outBox.innerText = "Error: Source base word cannot be empty.";
+                outBox.style.color = "#f43f5e";
+                return;
+            }
+
+            // 1. Converting text input string to raw array structure
+            let characterArray = baseWord.split('');
+            let initialLogArray = [...characterArray];
+
+            // 2. Breaking down insert values string to split character arrays format
+            let insertCharacters = insertVal.split('');
+
+            // 3. Executing compliance standard array.splice operation pipeline
+            // Syntax parameters map: array.splice(start, deleteCount, ...items)
+            characterArray.splice(spliceIndex, deleteCount, ...insertCharacters);
+            
+            let finalOutputString = characterArray.join('');
+
+            // Rendering beautiful structural output trace log to screen
+            outBox.style.color = "#34d399";
+            outBox.innerHTML = `Original Array : ['${initialLogArray.join("', '")}']<br>` +
+                               `Splice Operation: .splice(${spliceIndex}, ${deleteCount}, '${insertCharacters.join("', '")}')<br>` +
+                               `Mutated Output  => <strong style="color:#ffffff; font-size:1.05rem;">${finalOutputString}</strong>`;
+        }
+    </script>
+</body>
+</html>

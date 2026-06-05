@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Task 2 — Switch Calculator</title>
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1e1540 0%, #060814 100%);
+            color: #ffffff;
+            font-family: system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        h2 { color: #6366f1; text-align: center; margin-top: 0; }
+        .input-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        input, select {
+            padding: 12px;
+            background: #09090b;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #4f46e5; }
+        .result-box {
+            background: #04060d;
+            border: 1px solid #1f2937;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 18px;
+            color: #34d399;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Task 2: Switch Calculator</h2>
+        <div class="input-group">
+            <input type="number" id="num1" value="12" placeholder="First Number">
+            <select id="operator">
+                <option value="+">Addition (+)</option>
+                <option value="-">Subtraction (-)</option>
+                <option value="*">Multiplication (*)</option>
+                <option value="/">Division (/)</option>
+            </select>
+            <input type="number" id="num2" value="4" placeholder="Second Number">
+        </div>
+        <button onclick="runCalc()">Compute Calculation</button>
+        <div id="result" class="result-box">Awaiting calculation input parameters...</div>
+    </div>
+
+    <script>
+        function calculate(a, b, op) {
+            let res = 0;
+            switch(op) {
+                case '+': res = a + b; break;
+                case '-': res = a - b; break;
+                case '*': res = a * b; break;
+                case '/': 
+                    if(b === 0) return "Error: Cannot divide by zero";
+                    res = a / b; 
+                    break;
+                default: return "Invalid Operator";
+            }
+            return res;
+        }
+
+        function runCalc() {
+            const n1 = parseFloat(document.getElementById('num1').value);
+            const n2 = parseFloat(document.getElementById('num2').value);
+            const op = document.getElementById('operator').value;
+            const resBox = document.getElementById('result');
+
+            if (isNaN(n1) || isNaN(n2)) {
+                resBox.innerText = "Please fill both numbers.";
+                resBox.style.color = "#f43f5e";
+                return;
+            }
+
+            resBox.style.color = "#34d399";
+            resBox.innerText = "Result Output => " + calculate(n1, n2, op);
+        }
+    </script>
+</body>
+</html>

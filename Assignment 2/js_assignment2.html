@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Assignment 2 — Code Laboratory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #060814;
+            --panel-bg: rgba(17, 24, 39, 0.7);
+            --accent-indigo: #6366f1;
+            --text-heading: #ffffff;
+            --text-body: #94a3b8;
+            --border-line: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top, #1e1540 0%, var(--bg-base) 100%);
+            color: var(--text-heading);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .lab-container {
+            width: 100%;
+            max-width: 720px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-line);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 50px rgba(99, 102, 241, 0.15);
+            box-sizing: border-box;
+        }
+
+        /* CENTERED BRAND HEADER SECTION */
+        .header-zone {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .main-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .main-title span {
+            color: var(--accent-indigo);
+        }
+
+        .subtitle-text {
+            color: var(--text-body);
+            margin: 0.5rem 0 0 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* HORIZONTAL STRATEGIC QUESTION SELECTION TABS */
+        .tabs-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: #09090b;
+            padding: 0.4rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-line);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-body);
+            padding: 0.75rem 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tab-btn.active-tab {
+            background-color: var(--accent-indigo);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* QUESTION CARDS WRAPPERS */
+        .task-content-card {
+            display: none;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .task-content-card.active-card {
+            display: block;
+        }
+
+        .question-prompt {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            border-left: 3px solid var(--accent-indigo);
+            padding-left: 0.75rem;
+        }
+
+        /* REUSABLE FORM DESIGN SYSTEM ELEMENTS */
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .input-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .input-item label {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background-color: #09090b;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--accent-indigo);
+        }
+
+        .action-execute-btn {
+            background-color: var(--accent-indigo);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.85rem 1.75rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+            transition: background 0.15s ease;
+        }
+
+        .action-execute-btn:hover {
+            background-color: #4f46e5;
+        }
+
+        /* CONSOLE OUTPUT DISPLAY MATRIX BOX */
+        .output-div {
+            background-color: #04060d;
+            border: 1px solid #1f2937;
+            border-radius: 14px;
+            padding: 1.25rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            color: #34d399;
+            word-break: break-all;
+            overflow-y: auto;
+            max-height: 200px;
+        }
+
+        .output-even-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 0.5rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        .even-number-pill {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            padding: 0.3rem 0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lab-container">
+        <div class="header-zone">
+            <h1 class="main-title">JS <span>Assignment 2</span></h1>
+            <p class="subtitle-text">Computational Core Logic Engine</p>
+        </div>
+
+        <div class="tabs-row">
+            <button class="tab-btn active-tab" onclick="switchTask(1)">Task 1</button>
+            <button class="tab-btn" onclick="switchTask(2)">Task 2</button>
+            <button class="tab-btn" onclick="switchTask(3)">Task 3</button>
+            <button class="tab-btn" onclick="switchTask(4)">Task 4</button>
+        </div>
+
+        <div id="card-task1" class="task-content-card active-card">
+            <p class="question-prompt">1. Write code to display from 1 to 100 but just even numbers.</p>
+            <div class="form-row">
+                <button class="action-execute-btn" onclick="runEvenNumbers()">Generate Sequence</button>
+            </div>
+            <div id="out-task1" class="output-div">Click generate to compute numbers pipeline...</div>
+        </div>
+
+        <div id="card-task2" class="task-content-card">
+            <p class="question-prompt">2. Write a function to calculate which can add, subtract, multiply and divide two numbers. Use switch inside function.</p>
+            <div class="form-row">
+                <div class="input-item">
+                    <label>Value A</label>
+                    <input type="number" id="t2-num1" placeholder="Enter number" class="form-input" value="12">
+                </div>
+                <div class="input-item">
+                    <label>Operation</label>
+                    <select id="t2-op" class="form-select">
+                        <option value="+">Addition (+)</option>
+                        <option value="-">Subtraction (-)</option>
+                        <option value="*">Multiplication (*)</option>
+                        <option value="/">Division (/)</option>
+                    </select>
+                </div>
+                <div class="input-item">
+                    <label>Value B</label>
+                    <input type="number" id="t2-num2" placeholder="Enter number" class="form-input" value="4">
+                </div>
+                <button class="action-execute-btn" onclick="runCalculatorTask()">Compute</button>
+            </div>
+            <div id="out-task2" class="output-div">Result awaiting execution execution matrix...</div>
+        </div>
+
+        <div id="card-task3" class="task-content-card">
+            <p class="question-prompt">3. Write a function findTax() by using the Js switch control flow to calculate the tax percentage based on specified salary parameters.</p>
+            <div class="form-row">
+                <div class="input-item">
+                    <label>Person Salary Value</label>
+                    <input type="number" id="t3-salary" placeholder="e.g. 750000" class="form-input" value="750000">
+                </div>
+                <button class="action-execute-btn" onclick="runTaxTask()">Find Tax Amount</button>
+            </div>
+            <div id="out-task3" class="output-div">Tax parameters breakdown matrix...</div>
+        </div>
+
+        <div id="card-task4" class="task-content-card">
+            <p class="question-prompt">4. Find the sum of the products of corresponding digits of two numbers n1 and n2.</p>
+            <div class="form-row">
+                <div class="input-item">
+                    <label>Number n1</label>
+                    <input type="number" id="t4-n1" placeholder="e.g. 6" class="form-input" value="6">
+                </div>
+                <div class="input-item">
+                    <label>Number n2</label>
+                    <input type="number" id="t4-n2" placeholder="e.g. 34" class="form-input" value="34">
+                </div>
+                <button class="action-execute-btn" onclick="runDigitSumTask()">Execute Product</button>
+            </div>
+            <div id="out-task4" class="output-div">Digit vector sequence processing data...</div>
+        </div>
+    </div>
+
+    <script>
+        // Tab routing navigation controller switcher
+        function switchTask(taskIndex) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const cards = document.querySelectorAll('.task-content-card');
+            
+            tabs.forEach((tab, index) => {
+                if (index === (taskIndex - 1)) tab.classList.add('active-tab');
+                else tab.classList.remove('active-tab');
+            });
+
+            cards.forEach((card, index) => {
+                if (index === (taskIndex - 1)) card.classList.add('active-card');
+                else card.classList.remove('active-card');
+            });
+        }
+
+        // QUESTION 1 CORE COMPUTE: Generate Even Numbers 1-100
+        function runEvenNumbers() {
+            const output = document.getElementById('out-task1');
+            let gridHtml = '<div class="output-even-grid">';
+            
+            for (let i = 1; i <= 100; i++) {
+                if (i % 2 === 0) {
+                    gridHtml += `<div class="even-number-pill">${i}</div>`;
+                }
+            }
+            gridHtml += '</div>';
+            output.innerHTML = gridHtml;
+        }
+
+        // QUESTION 2 CORE COMPUTE: Switch Statement Arithmetic Calculator
+        function coreCalculator(a, b, operation) {
+            let result = 0;
+            switch (operation) {
+                case '+': result = a + b; break;
+                case '-': result = a - b; break;
+                case '*': result = a * b; break;
+                case '/': 
+                    if (b === 0) return "Error: Division by zero is not mapped.";
+                    result = a / b; 
+                    break;
+                default: return "Invalid Operation Token Selected.";
+            }
+            return result;
+        }
+
+        function runCalculatorTask() {
+            const n1 = parseFloat(document.getElementById('t2-num1').value);
+            const n2 = parseFloat(document.getElementById('t2-num2').value);
+            const op = document.getElementById('t2-op').value;
+            const output = document.getElementById('out-task2');
+
+            // FIXED: 'IsNaN' changed to standard 'isNaN' lowercase filter
+            if (isNaN(n1) || isNaN(n2)) {
+                output.innerText = "Please provide valid numeric values inside variables.";
+                output.style.color = "#f43f5e";
+                return;
+            }
+
+            const computation = coreCalculator(n1, n2, op);
+            output.style.color = "#34d399";
+            output.innerText = `Operation: ${n1} ${op} ${n2} \nCalculated Result Output => ${computation}`;
+        }
+
+        // QUESTION 3 CORE COMPUTE: findTax() Function Router Implementation
+        function findTax(salary) {
+            if (salary < 0) return { rate: 0, amount: 0, msg: "Invalid Negative Salary Data Provided." };
+            
+            // Evaluates true parameters inside matching range matrices using switch(true) conditional flow control
+            let taxRate = 0;
+            switch (true) {
+                case (salary <= 500000):
+                    taxRate = 0;
+                    break;
+                case (salary <= 1000000):
+                    taxRate = 10;
+                    break;
+                case (salary <= 1500000):
+                    taxRate = 20;
+                    break;
+                default:
+                    taxRate = 30;
+                    break;
+            }
+            
+            let calculatedTaxAmount = salary * (taxRate / 100);
+            return { rate: taxRate, amount: calculatedTaxAmount };
+        }
+
+        function runTaxTask() {
+            const salaryInput = parseFloat(document.getElementById('t3-salary').value);
+            const output = document.getElementById('out-task3');
+
+            if (isNaN(salaryInput)) {
+                output.innerText = "Please input a valid numeric matrix for salary evaluation.";
+                output.style.color = "#f43f5e";
+                return;
+            }
+
+            const data = findTax(salaryInput);
+            output.style.color = "#34d399";
+            output.innerText = `Salary Assessment Base: ₹${salaryInput.toLocaleString()} \nTax Applied Rate: ${data.rate}% \nTotal Tax Amount Levied Matrix => ₹${data.amount.toLocaleString()}`;
+        }
+
+        // QUESTION 4 CORE COMPUTE: Sum of Products of Corresponding Digits 
+        function computeDigitsProductSum(n1, n2) {
+            // Absolute validation filter parsing
+            let s1 = Math.abs(n1).toString();
+            let s2 = Math.abs(n2).toString();
+            
+            let sum = 0;
+            let i = s1.length - 1;
+            let j = s2.length - 1;
+            
+            // Loop tracking right-to-left alignment vectors step by step
+            while (i >= 0 && j >= 0) {
+                let d1 = parseInt(s1[i]);
+                let d2 = parseInt(s2[j]);
+                sum += (d1 * d2);
+                i--;
+                j--;
+            }
+            return sum;
+        }
+
+        function runDigitSumTask() {
+            const val1 = parseInt(document.getElementById('t4-n1').value);
+            const val2 = parseInt(document.getElementById('t4-n2').value);
+            const output = document.getElementById('out-task4');
+
+            // FIXED: 'IsNaN' changed to standard 'isNaN' lowercase filter
+            if (isNaN(val1) || isNaN(val2)) {
+                output.innerText = "Provide accurate positive integer values.";
+                output.style.color = "#f43f5e";
+                return;
+            }
+
+            const result = computeDigitsProductSum(val1, val2);
+            output.style.color = "#34d399";
+            output.innerText = `Inputs Array: n1 = ${val1}, n2 = ${val2} \nSum of Products of Corresponding Digits => ${result}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Task 1 — Dark Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; background: #060814; color: white; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2.5rem; max-width: 500px; width: 100%; text-align: center; }
+        h3 { color: #6366f1; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.4rem; margin-top: 0; }
+        
+        /* JSFIDDLE MANDATED STYLES SHEET */
+        .day { background-color: white !important; color: black !important; }
+        .night { background-color: black !important; color: gold !important; }
+        .button_night { background-color: darkblue !important; color: white !important; }
+
+        .sandbox { padding: 2rem; border-radius: 14px; border: 1px solid #cbd5e1; margin-top: 1.5rem; transition: all 0.2s ease; }
+        .btn-style { padding: 10px 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h3>Task 01: Dark Theme Toggle</h3>
+        <p style="color: #94a3b8; font-size: 0.95rem;">Toggles main div's class between 'day' and 'night' dynamically.</p>
+        
+        <div id="app" class="sandbox day">
+            <p style="font-size: 1.05rem; font-weight: 500; margin: 0;">I am a HashedBit student, ready to become an awesome full stack developer</p>
+            <button id="toggle-btn" class="btn-style" onclick="swapTheme()">Toggle theme</button>
+        </div>
+    </div>
+
+    <script>
+        // JSFIDDLE TARGET JAVASCRIPT
+        function swapTheme() {
+            const appDiv = document.getElementById('app');
+            const toggleBtn = document.getElementById('toggle-btn');
+            
+            if (appDiv.classList.contains('day')) {
+                appDiv.classList.remove('day');
+                appDiv.classList.add('night');
+                toggleBtn.classList.add('button_night');
+            } else {
+                appDiv.classList.remove('night');
+                appDiv.classList.add('day');
+                toggleBtn.classList.remove('button_night');
+            }
+        }
+    </script>
+</body>
+</html>

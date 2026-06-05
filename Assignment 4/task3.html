@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Task 3 — Hide Show Para</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; background: #060814; color: white; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 2.5rem; max-width: 500px; width: 100%; }
+        h3 { color: #6366f1; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.4rem; text-align: center; margin-top: 0; }
+        .sandbox { background: white; color: black; padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; border: 1px solid #cbd5e1; }
+        .btn-style { padding: 8px 16px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h3>Task 03: Visibility Switcher</h3>
+        
+        <div class="sandbox">
+            <h1 style="font-size: 1.6rem; margin: 0 0 0.75rem 0;">I am a headline made with HTML</h1>
+            <p id="useless-paragraph" style="font-size: 1rem; color: #475569; margin: 0 0 1.25rem 0;">Useless paragraph.</p>
+            <button class="btn-style" onclick="toggleVisibility()">Toggle Button</button>
+        </div>
+    </div>
+
+    <script>
+        // JSFIDDLE TARGET JAVASCRIPT
+        function toggleVisibility() {
+            const para = document.getElementById('useless-paragraph');
+            
+            if (para.style.display === "none") {
+                para.style.display = "block";
+            } else {
+                para.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

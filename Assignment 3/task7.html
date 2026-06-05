@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Assignment 3 — Task 5</title>
+    <!-- Executive Top-Tier Typography Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #060814;
+            --panel-bg: rgba(17, 24, 39, 0.7);
+            --accent-indigo: #6366f1;
+            --text-heading: #ffffff;
+            --text-body: #94a3b8;
+            --border-line: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top, #1e1540 0%, var(--bg-base) 100%);
+            color: var(--text-heading);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-line);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 560px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            box-sizing: border-box;
+        }
+
+        h3 {
+            color: var(--accent-indigo);
+            margin: 0 0 0.5rem 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .prompt {
+            color: var(--text-body);
+            font-size: 0.95rem;
+            margin: 0 0 1.5rem 0;
+            line-height: 1.5;
+        }
+
+        .flex-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .input-block label {
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: #09090b;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus {
+            border-color: var(--accent-indigo);
+        }
+
+        button {
+            background: var(--accent-indigo);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #4f46e5;
+        }
+
+        /* LIVE SMART VISUAL TERMINAL OUTPUT */
+        .console {
+            background: #04060d;
+            border: 1px solid #1f2937;
+            padding: 1.25rem;
+            border-radius: 14px;
+            margin-top: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .output-label {
+            color: #475569;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .text-line {
+            color: #e2e8f0;
+            word-break: break-word;
+        }
+
+        /* HIGHLIGHTING CHIPS ARCHITECTURE */
+        .wrong-highlight {
+            background-color: rgba(244, 63, 94, 0.2);
+            color: #f43f5e;
+            text-decoration: line-through;
+            padding: 0.15rem 0.4rem;
+            border-radius: 6px;
+            font-weight: 600;
+            border: 1px solid rgba(244, 63, 94, 0.15);
+        }
+
+        .correct-highlight {
+            background-color: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            padding: 0.15rem 0.4rem;
+            border-radius: 6px;
+            font-weight: 600;
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h3>Question 05 — Typo Correction Matrix</h3>
+        <p class="prompt">Provide target strings with wrong parameters. The logic engine highlights word transformations with color codes using native regex string replaces.</p>
+        
+        <div class="flex-inputs">
+            <div class="input-block">
+                <label>Target Full Sentence</label>
+                <input type="text" id="t5-str" value="i am a studemt">
+            </div>
+            <div class="input-block">
+                <label>Wrong Word to Find</label>
+                <input type="text" id="t5-wrong" value="studemt" style="border-color: rgba(244, 63, 94, 0.4);">
+            </div>
+            <div class="input-block">
+                <label>Correct Word to Replace</label>
+                <input type="text" id="t5-correct" value="student" style="border-color: rgba(52, 211, 153, 0.4);">
+            </div>
+        </div>
+
+        <button onclick="executeT5()">Correct & Highlight Target</button>
+        
+        <div class="console">
+            <div class="output-label">Processed Analytics Terminal</div>
+            <div id="out5" class="text-line" style="color: #64748b;">Awaiting live replacement sequence compiler inputs...</div>
+        </div>
+    </div>
+
+    <script>
+        // Mandated core function matching your exact criteria rules
+        function correctfn(string, wrong, correct) {
+            return string.replace(wrong, correct);
+        }
+
+        function executeT5() {
+            let sentenceVal = document.getElementById('t5-str').value;
+            let wrongVal = document.getElementById('t5-wrong').value.trim();
+            let correctVal = document.getElementById('t5-correct').value.trim();
+            let outBox = document.getElementById('out5');
+
+            if (wrongVal === '' || correctVal === '') {
+                outBox.innerHTML = "Error: Input fields cannot be processed blank.";
+                outBox.style.color = "#f43f5e";
+                return;
+            }
+
+            // Standard logic replacement engine trigger check
+            if (!sentenceVal.includes(wrongVal)) {
+                outBox.innerHTML = `Notice: Word "<span class='wrong-highlight' style='text-decoration:none;'>${wrongVal}</span>" not found inside the sentence string matrix.`;
+                outBox.style.color = "#e2e8f0";
+                return;
+            }
+
+            // 1. Raw technical function logic execution for compliance safety
+            let rawCalculationResult = correctfn(sentenceVal, wrongVal, correctVal);
+
+            // 2. High-end rendering engine to construct the neat colorful visual highlight tags
+            let dynamicHighlightMarkup = `<span class="correct-highlight">${correctVal}</span>`;
+            let visualRenderOutput = sentenceVal.replace(wrongVal, dynamicHighlightMarkup);
+
+            // Print the final beautifully formatted result to screen
+            outBox.style.color = "#e2e8f0";
+            outBox.innerHTML = `<strong>Original Context Structure:</strong> "${sentenceVal.replace(wrongVal, `<span class="wrong-highlight">${wrongVal}</span>`)}"<br><br>
+                                <strong>Compiled Transformation Output:</strong> "${visualRenderOutput}"`;
+        }
+    </script>
+</body>
+</html>

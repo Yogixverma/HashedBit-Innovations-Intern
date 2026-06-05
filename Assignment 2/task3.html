@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Task 3 — Tax Evaluator</title>
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1e1540 0%, #060814 100%);
+            color: #ffffff;
+            font-family: system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        h2 { color: #6366f1; text-align: center; margin-top: 0; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        input {
+            padding: 12px;
+            background: #09090b;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #4f46e5; }
+        .result-box {
+            background: #04060d;
+            border: 1px solid #1f2937;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 25px;
+            white-space: pre-line;
+            line-height: 1.6;
+            font-size: 16px;
+            color: #34d399;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Task 3: findTax() Engine</h2>
+        <div class="input-group">
+            <label style="color: #94a3b8; font-size: 14px;">Annual Salary Amount (₹)</label>
+            <input type="number" id="salary" value="750000" placeholder="e.g. 750000">
+        </div>
+        <button onclick="runTax()">Calculate Tax Liability</button>
+        <div id="result" class="result-box">Awaiting salary evaluation parameters...</div>
+    </div>
+
+    <script>
+        function findTax(salary) {
+            if (salary < 0) return { rate: 0, amount: 0 };
+            let rate = 0;
+            
+            switch (true) {
+                case (salary <= 500000): rate = 0; break;
+                case (salary <= 1000000): rate = 10; break;
+                case (salary <= 1500000): rate = 20; break;
+                default: rate = 30; break;
+            }
+            
+            return { rate: rate, amount: salary * (rate / 100) };
+        }
+
+        function runTax() {
+            const salaryVal = parseFloat(document.getElementById('salary').value);
+            const resBox = document.getElementById('result');
+
+            if (isNaN(salaryVal)) {
+                resBox.innerText = "Please input a valid salary.";
+                resBox.style.color = "#f43f5e";
+                return;
+            }
+
+            const taxData = findTax(salaryVal);
+            resBox.style.color = "#34d399";
+            resBox.innerText = `Salary Assessed: ₹${salaryVal.toLocaleString()}\nTax Bracket Applied: ${taxData.rate}%\nTotal Tax Amount: ₹${taxData.amount.toLocaleString()}`;
+        }
+    </script>
+</body>
+</html>
